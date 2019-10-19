@@ -1,6 +1,6 @@
 # Felicitas Pojtinger's `gotodo`
 
-A simple note taking application, for the purpose of learning and evaluating Go and Cobra.
+A simple tasks management application, for the purpose of learning and evaluating Go and Cobra.
 
 ## Features
 
@@ -26,6 +26,6 @@ Use "gotodo [command] --help" for more information about a command.
 
 ## License
 
-`gotod` (c) 2019 Felicitas Pojtinger
+`gotodo` (c) 2019 Felicitas Pojtinger
 
 SPDX-License-Identifier: AGPL-3.0
