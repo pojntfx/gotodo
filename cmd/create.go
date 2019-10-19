@@ -12,7 +12,7 @@ var createCmd = &cobra.Command{
 	Long:  `Create a new todo and track your time!`,
 	Run: func(cmd *cobra.Command, args []string) {
 		db.Create(db.Todo{Id: len(db.Read()) + 1, Title: title, Description: description})
-		fmt.Println(db.Read())
+		fmt.Println("TODO added successfully!")
 	},
 }
 

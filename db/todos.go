@@ -1,5 +1,12 @@
 package db
 
+import (
+	"io/ioutil"
+	"os"
+	"strconv"
+	"strings"
+)
+
 type Todo struct {
 	Id          int
 	Title       string
@@ -7,6 +14,29 @@ type Todo struct {
 }
 
 var todos []Todo
+
+func ReadFromFile() {
+	if _, err := os.Stat("/tmp/todos.csv"); os.IsNotExist(err) {
+		os.Create("/tmp/todos.csv")
+	}
+
+	rawTodos, _ := ioutil.ReadFile("/tmp/todos.csv")
+
+	todoLines := strings.Split(string(rawTodos), "\n")
+
+	var todosFromFile []Todo
+
+	for _, todoFromFile := range todoLines {
+		todoParts := strings.Split(todoFromFile, ",")
+		if len(todoParts) == 3 {
+			ID, _ := strconv.ParseInt(todoParts[0], 0, 64)
+			todo := Todo{Id: int(ID), Title: todoParts[1], Description: todoParts[2]}
+			todosFromFile = append(todosFromFile, todo)
+		}
+	}
+
+	todos = todosFromFile
+}
 
 func Create(newTodo Todo) {
 	todos = append(todos, newTodo)

@@ -11,6 +11,7 @@ var readCmd = &cobra.Command{
 	Short: "Read all todos",
 	Long:  `Read all the todos you have`,
 	Run: func(cmd *cobra.Command, args []string) {
+		db.ReadFromFile()
 		fmt.Println(db.Read())
 	},
 }
