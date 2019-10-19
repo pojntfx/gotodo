@@ -11,7 +11,9 @@ var createCmd = &cobra.Command{
 	Short: "Create a todo",
 	Long:  `Create a new todo and track your time!`,
 	Run: func(cmd *cobra.Command, args []string) {
+		db.ReadFromFile()
 		db.Create(db.Todo{Id: len(db.Read()) + 1, Title: title, Description: description})
+		db.WriteToFile()
 		fmt.Println("TODO added successfully!")
 	},
 }

@@ -38,6 +38,20 @@ func ReadFromFile() {
 	todos = todosFromFile
 }
 
+func WriteToFile() {
+	if _, err := os.Stat("/tmp/todos.csv"); os.IsNotExist(err) {
+		os.Create("/tmp/todos.csv")
+	}
+
+	var todosToWriteToFile string
+
+	for _, todo := range todos {
+		todosToWriteToFile += string(todo.Id) + "," + todo.Title + "," + todo.Description + "\n"
+	}
+
+	ioutil.WriteFile("/tmp/todos.csv", []byte(todosToWriteToFile), 0400)
+}
+
 func Create(newTodo Todo) {
 	todos = append(todos, newTodo)
 }
