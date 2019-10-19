@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -89,18 +90,43 @@ func Read() []Todo {
 	return todos
 }
 
-func Update(todoToBeUpdated Todo) {
+func Update(todoToBeUpdated Todo) (Todo, error) {
 	var newTodos []Todo
+	var updatedTodo Todo
 
 	for _, todo := range todos {
 		if todo.Id == todoToBeUpdated.Id {
-			newTodos = append(newTodos, todoToBeUpdated)
+			var updatedTodoTitle string
+			var updatedTodoDescription string
+
+			if todoToBeUpdated.Title == "" {
+				updatedTodoTitle = todo.Title
+			} else {
+				updatedTodoTitle = todoToBeUpdated.Title
+			}
+
+			if todoToBeUpdated.Description == "" {
+				updatedTodoDescription = todo.Description
+			} else {
+				updatedTodoDescription = todoToBeUpdated.Description
+			}
+
+			updatedTodo = Todo{Id: todoToBeUpdated.Id, Title: updatedTodoTitle, Description: updatedTodoDescription}
+
+			newTodos = append(newTodos, updatedTodo)
+
 		} else {
 			newTodos = append(newTodos, todo)
 		}
 	}
 
 	todos = newTodos
+
+	if updatedTodo.Title == "" {
+		return updatedTodo, errors.New("Todo with ID " + strconv.Itoa(todoToBeUpdated.Id) + " could not be found")
+	} else {
+		return updatedTodo, nil
+	}
 }
 
 func Delete(id int) {

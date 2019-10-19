@@ -27,6 +27,21 @@
         "-d",
         "first-todo-description-3"
       ]
-    }
+    },
+    {
+      "name": "Launch (update)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/main.go",
+      "env": {},
+      "args": [
+        "update",
+        "0",
+        "-t",
+        "first-todo-title-3",
+        "-d",
+        "first-todo-description-3"
+      ]
   ]
 }
