@@ -24,6 +24,22 @@ func Init() {
 	storageFile = filepath.Join(home, ".gotodos")
 }
 
+func GetUniqueId(seed int) int {
+	var matches []bool
+
+	for _, todo := range todos {
+		if todo.Id == seed {
+			matches = append(matches, true)
+		}
+	}
+
+	if len(matches) == 0 {
+		return seed
+	} else {
+		return GetUniqueId(seed + 1)
+	}
+}
+
 func ReadFromFile() {
 	Init()
 
