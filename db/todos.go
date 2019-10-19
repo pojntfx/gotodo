@@ -59,7 +59,7 @@ func WriteToFile() {
 	var todosToWriteToFile string
 
 	for _, todo := range todos {
-		todosToWriteToFile += string(todo.Id) + "," + todo.Title + "," + todo.Description + "\n"
+		todosToWriteToFile += strconv.Itoa(todo.Id) + "," + todo.Title + "," + todo.Description + "\n"
 	}
 
 	ioutil.WriteFile(storageFile, []byte(todosToWriteToFile), 0400)
@@ -87,11 +87,11 @@ func Update(todoToBeUpdated Todo) {
 	todos = newTodos
 }
 
-func Delete(todoToBeDeleted Todo) {
+func Delete(id int) {
 	var newTodos []Todo
 
 	for _, todo := range todos {
-		if !(todo.Id == todoToBeDeleted.Id) {
+		if !(todo.Id == id) {
 			newTodos = append(newTodos, todo)
 		}
 	}

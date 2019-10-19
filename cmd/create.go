@@ -16,7 +16,7 @@ var createCmd = &cobra.Command{
 		ID := len(db.Read()) + 1
 		db.Create(db.Todo{Id: ID, Title: title, Description: description})
 		db.WriteToFile()
-		fmt.Println("gotodo added successfully!")
+		fmt.Println("Successfully created gotodo:")
 		t := table.NewWriter()
 		t.AppendHeader(table.Row{"#", "Title", "Description"})
 		t.AppendRow(table.Row{
