@@ -9,8 +9,8 @@ import (
 var configFile string
 
 var rootCmd = &cobra.Command{
-	Use:   "go-todo",
-	Short: "go-todo is a simple TODO application",
+	Use:   "gotodo",
+	Short: "gotodo is a simple TODO application",
 	Long:  `Manage your tasks and be more productive!`,
 }
 

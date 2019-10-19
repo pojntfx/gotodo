@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/pojntfx/go-todo/db"
+	"github.com/jedib0t/go-pretty/table"
+	"github.com/pojntfx/gotodo/db"
 	"github.com/spf13/cobra"
 )
 
@@ -12,9 +13,18 @@ var createCmd = &cobra.Command{
 	Long:  `Create a new todo and track your time!`,
 	Run: func(cmd *cobra.Command, args []string) {
 		db.ReadFromFile()
-		db.Create(db.Todo{Id: len(db.Read()) + 1, Title: title, Description: description})
+		ID := len(db.Read()) + 1
+		db.Create(db.Todo{Id: ID, Title: title, Description: description})
 		db.WriteToFile()
-		fmt.Println("TODO added successfully!")
+		fmt.Println("gotodo added successfully!")
+		t := table.NewWriter()
+		t.AppendHeader(table.Row{"#", "Title", "Description"})
+		t.AppendRow(table.Row{
+			ID,
+			title,
+			description,
+		})
+		fmt.Println(t.Render())
 	},
 }
 
@@ -22,7 +32,7 @@ var title string
 var description string
 
 func init() {
-	createCmd.Flags().StringVarP(&title, "title", "t", "My first TODO", "The title of the new todo")
+	createCmd.Flags().StringVarP(&title, "title", "t", "My first gotodo", "The title of the new todo")
 	createCmd.Flags().StringVarP(&description, "description", "d", "Buy groceries", "The description of the new todo")
 
 	createCmd.MarkFlagRequired("title")
