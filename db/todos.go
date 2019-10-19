@@ -1,9 +1,9 @@
-package todo
+package db
 
 type Todo struct {
-	id          int
-	title       string
-	description string
+	Id          int
+	Title       string
+	Description string
 }
 
 var todos []Todo
@@ -20,7 +20,7 @@ func Update(todoToBeUpdated Todo) {
 	var newTodos []Todo
 
 	for _, todo := range todos {
-		if todo.id == todoToBeUpdated.id {
+		if todo.Id == todoToBeUpdated.Id {
 			newTodos = append(newTodos, todoToBeUpdated)
 		} else {
 			newTodos = append(newTodos, todo)
@@ -34,7 +34,7 @@ func Delete(todoToBeDeleted Todo) {
 	var newTodos []Todo
 
 	for _, todo := range todos {
-		if !(todo.id == todoToBeDeleted.id) {
+		if !(todo.Id == todoToBeDeleted.Id) {
 			newTodos = append(newTodos, todo)
 		}
 	}
