@@ -3,6 +3,7 @@ package db
 import (
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -13,14 +14,24 @@ type Todo struct {
 	Description string
 }
 
+var storageFile string
+
 var todos []Todo
 
+func Init() {
+	home, _ := os.UserHomeDir()
+
+	storageFile = filepath.Join(home, ".gotodos")
+}
+
 func ReadFromFile() {
-	if _, err := os.Stat("/tmp/todos.csv"); os.IsNotExist(err) {
-		os.Create("/tmp/todos.csv")
+	Init()
+
+	if _, err := os.Stat(storageFile); os.IsNotExist(err) {
+		os.Create(storageFile)
 	}
 
-	rawTodos, _ := ioutil.ReadFile("/tmp/todos.csv")
+	rawTodos, _ := ioutil.ReadFile(storageFile)
 
 	todoLines := strings.Split(string(rawTodos), "\n")
 
@@ -39,8 +50,10 @@ func ReadFromFile() {
 }
 
 func WriteToFile() {
-	if _, err := os.Stat("/tmp/todos.csv"); os.IsNotExist(err) {
-		os.Create("/tmp/todos.csv")
+	Init()
+
+	if _, err := os.Stat(storageFile); os.IsNotExist(err) {
+		os.Create(storageFile)
 	}
 
 	var todosToWriteToFile string
@@ -49,7 +62,7 @@ func WriteToFile() {
 		todosToWriteToFile += string(todo.Id) + "," + todo.Title + "," + todo.Description + "\n"
 	}
 
-	ioutil.WriteFile("/tmp/todos.csv", []byte(todosToWriteToFile), 0400)
+	ioutil.WriteFile(storageFile, []byte(todosToWriteToFile), 0400)
 }
 
 func Create(newTodo Todo) {
